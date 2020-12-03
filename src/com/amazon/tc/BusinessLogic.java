@@ -2,18 +2,20 @@ package com.amazon.tc;
 
 import io.appium.java_client.*;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.*;
 
 import com.amazon.driverPackage.TestRunner;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.Dimension;
 
 public class BusinessLogic extends TestRunner {
 
@@ -263,6 +265,31 @@ public class BusinessLogic extends TestRunner {
         return elem;
     }
 
+    public void search(String TCID)throws Exception{
+        nativeDriver.findElementByXPath(getObject("skip_SignIn_Btn")).click();
+        nativeDriver.findElementByXPath(getObject("search_bar")).click();
+        Thread.sleep(5000);
+      MobileElement searchBar=  nativeDriver.findElementByXPath(getObject("search_bar"));
+        searchBar.sendKeys(getTestData("Search",TCID));
+        //nativeDriver.getKeyboard().sendKeys(Keys.BACK_SPACE);
+        //nativeDriver.runAppInBackground(Duration.ofSeconds(5));
+
+        Robot robot =new Robot();
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.delay(5);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+
+
+
+        Thread.sleep(5000);
+        System.out.println("^^^^^^^^^^^^^");
+        Thread.sleep(5000);
+       //  nativeDriver.findElementByXPath(getObject("search_bar")).click();
+       System.out.println(nativeDriver.getPageSource());
+
+        swipeScreen(Direction.UP);
+    }
+
 
     /**
      * This method is used to Verify the list of beneficiaries
@@ -270,43 +297,7 @@ public class BusinessLogic extends TestRunner {
      * @throws NoSuchElementException
      */
 
-    public void verifyBeneficiaryDetails(String TCID) {
-        try {
-            String[] accNoXL = getTestData("BeneficiaryAccounts", TCID)
-                    .split(":");
-            String[] accNameXL = getTestData("BeneficiaryName", TCID).split(":");
-            System.out.println(accNameXL);
 
-            for (int i = 0; i < accNoXL.length; i++) {
-                String accountNumber = "//android.view.View[@content-desc='" + accNoXL[i] + "']";
-                System.out.println(accNoXL[i]);
-                System.out.println(accountNumber);
-                String accountName = "//android.view.View[@content-desc='" + accNameXL[i] + "']";
-                System.out.println(accNameXL[i]);
-                System.out.println(nativeDriver.findElement(By.xpath(accountNumber)).isDisplayed());
-                System.out.println(nativeDriver.findElement(By.xpath(accountName)).isDisplayed());
-                i++;
-            }
-        } catch (NoSuchElementException e) {
-            e.printStackTrace();
-        }
-    }
-			/*for (int j = 0; j <= accountName.length; j++) {
-				if (i == j) {
-					if (accountName[j].equals(valueofAccountname)) {
-						System.out
-								.println("Benificiary Account Number and Name is dispalyed Properly");
-					} else {
-						System.out
-								.println("Benificiary Account Number and Name displayed wrongly");
-					}*/
-
-
-    /**
-     * This method is used to logout the app
-     *
-     * @throws NoSuchElementException
-     */
     public void logout() {
 
         try {
@@ -315,4 +306,76 @@ public class BusinessLogic extends TestRunner {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Performs swipe from the center of screen
+     *
+     * @param dir the direction of swipe
+     * @version java-client: 7.3.0
+     **/
+    public void swipeScreen(Direction dir) {
+        System.out.println("swipeScreen(): dir: '" + dir + "'"); // always log your actions
+
+        // Animation default time:
+        //  - Android: 300 ms
+        //  - iOS: 200 ms
+        // final value depends on your app and could be greater
+        final int ANIMATION_TIME = 600; // ms
+
+        final int PRESS_TIME = 600; // ms
+
+        int edgeBorder = 10; // better avoid edges
+        PointOption pointOptionStart, pointOptionEnd;
+
+        // init screen variables
+        Dimension dims = nativeDriver.manage().window().getSize();
+
+        // init start point = center of screen
+        pointOptionStart = PointOption.point(dims.width / 2, dims.height / 2);
+
+        switch (dir) {
+            case DOWN: // center of footer
+                pointOptionEnd = PointOption.point(dims.width / 2, dims.height - edgeBorder);
+                break;
+            case UP: // center of header
+                pointOptionEnd = PointOption.point(dims.width / 2, edgeBorder);
+                break;
+            case LEFT: // center of left side
+                pointOptionEnd = PointOption.point(edgeBorder, dims.height / 2);
+                break;
+            case RIGHT: // center of right side
+                pointOptionEnd = PointOption.point(dims.width - edgeBorder, dims.height / 2);
+                break;
+            default:
+                throw new IllegalArgumentException("swipeScreen(): dir: '" + dir + "' NOT supported");
+        }
+
+        // execute swipe using TouchAction
+        try {
+            new TouchAction(nativeDriver)
+                    .press(pointOptionStart)
+                    // a bit more reliable when we add small wait
+                    .waitAction(WaitOptions.waitOptions(Duration.ofMillis(PRESS_TIME)))
+                    .moveTo(pointOptionEnd)
+                    .release().perform();
+        } catch (Exception e) {
+            System.err.println("swipeScreen(): TouchAction FAILED\n" + e.getMessage());
+            return;
+        }
+
+        // always allow swipe action to complete
+        try {
+            Thread.sleep(ANIMATION_TIME);
+        } catch (InterruptedException e) {
+            // ignore
+        }
+    }
+
+    public enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT;
+    }
+
 }

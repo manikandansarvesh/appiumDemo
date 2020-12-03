@@ -5,10 +5,10 @@ import org.testng.annotations.Test;
 public class TestCase2 extends BusinessLogic{
 	
 	@Test
-	public void verifyBenficiaryAccounts() throws InterruptedException{
+	public void searchProduct() throws Exception{
 		verifyHomeScreen();
-		login("TC02");
-		logout();
+		search("TC02");
+		//logout();
 				
 		
 			

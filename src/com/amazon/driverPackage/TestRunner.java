@@ -24,7 +24,7 @@ public class TestRunner extends PropertyReader {
 String Udata;
 	
 	DesiredCapabilities mobileCapablities = new DesiredCapabilities();
-	public static AppiumDriver nativeDriver = null;	
+	public static AppiumDriver <MobileElement>nativeDriver = null;
 	
 	public void initializeDriver() throws MalformedURLException{	
       
