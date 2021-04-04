@@ -23,6 +23,25 @@ public class BusinessLogic extends TestRunner {
 
     }
 
+    private static final By amazon_logo = By.xpath("//*[@resource-id='com.amazon.mShop.android.shopping:id/action_bar_home_logo']");
+    private static final By harmburger_menu = By.xpath("//*[@resource-id='com.amazon.mShop.android.shopping:id/action_bar_burger_icon']");
+    private static final By search_bar = By.xpath("//*[@resource-id='com.amazon.mShop.android.shopping:id/rs_search_src_text']");
+
+    //Sigin Locators
+    private static final By signIn_Btn = By.xpath("//*[contains(@text,'Already a customer? Sign in')]");
+    private static final By skip_SignIn_Btn = By.xpath("//*[contains(@text,'Skip sign in')]");
+    private static final By signIn_text = By.xpath("//*[@text='Sign in for the best experience']");
+    private static final By Welcome_label = By.xpath("//*[@text='Welcome']");
+    private static final By emailmissing_alert = By.xpath("//*[@text='Enter your email or mobile phone number']");
+    private static final By register_header = By.xpath("//*[contains(@text,'Create account')]");
+    private static final By sign_In_header = By.xpath("//*[@text='Sign-In. Already a customer?']");
+    private static final By email_login = By.xpath("//android.widget.EditText[@resource-id='ap_email_login' and @index='1']");
+    private static final By continue_Btn = By.xpath("//android.widget.Button[@text='Continue']");
+    private static final By termsAndConditions = By.xpath("//android.view.View[contains(@text,'By continuing')]");
+    private static final By password = By.xpath("//*[@resource-id='ap_password']");
+    private static final By showpassowrd_toggle = By.xpath("//*[@resource-id='auth-show-password-checkbox-container']");
+    private static final By sigIn_Submit = By.xpath("//*[@resource-id='signInSubmit']");
+
     /**
      * This method is used to verify whether the home screen is present or not
      *
@@ -30,14 +49,21 @@ public class BusinessLogic extends TestRunner {
      */
     public void verifyHomeScreen() {
         try {
-            if (nativeDriver.findElement(
-                    By.xpath(getObject("amazon_logo"))).isDisplayed()) {
+            if (nativeDriver.findElement(amazon_logo).isDisplayed()) {
+                //    By.xpath(getObject("amazon_logo"))).isDisplayed()) {
                 System.out.println("Amazon screen Header");
             }
         } catch (Exception e) {
             e.getMessage();
         }
     }
+
+    /**
+     * This method is used to verify whether the hambruger menu is present or not
+     *If element is present,will click
+     *
+     * @throws NoSuchElementException
+     */
 
     public void clickHarmburgerMenu() {
 
@@ -55,12 +81,8 @@ public class BusinessLogic extends TestRunner {
     public void clickSigInBtn() {
 
         try {
-
-            /*if (nativeDriver.findElement(
-                    By.xpath(getObject("signIn_text"))).isDisplayed()) {*/
-             nativeDriver.findElement(By.xpath(getObject("signIn_Btn"))).click();
-            //nativeDriver.findElement(By.xpath(getObject("signIn_Btn"))).click();
-                System.out.println("Sign In Button has been clicked");
+            nativeDriver.findElement(By.xpath(getObject("signIn_Btn"))).click();
+            System.out.println("Sign In Button has been clicked");
 
         } catch (NoSuchElementException e) {
             e.getLocalizedMessage();
@@ -79,63 +101,41 @@ public class BusinessLogic extends TestRunner {
 
         try {
             boolean label = nativeDriver.findElement(By.xpath(getObject("Welcome_label"))).isDisplayed();
-            if(label){
-
-				nativeDriver.findElement(By.xpath(getObject("continue_Btn"))).click();
-              boolean flag = nativeDriver.findElement(By.xpath(getObject("emailmissing_alert"))).isDisplayed();
+            if (label) {
+                nativeDriver.findElement(By.xpath(getObject("continue_Btn"))).click();
+                boolean flag = nativeDriver.findElement(By.xpath(getObject("emailmissing_alert"))).isDisplayed();
                 System.out.println("**********");
-              System.out.println(flag);
+                System.out.println(flag);
+            }
 
-			}
-
-                nativeDriver.findElement(By.xpath(getObject("register_header"))).isDisplayed();
-           // nativeDriver.findElement(By.xpath(getObject("sign-In_header"))).isDisplayed();
+            nativeDriver.findElement(By.xpath(getObject("register_header"))).isDisplayed();
             System.out.println(nativeDriver.getPageSource());
-            System.out.println(getTestData("Username",TCID));
+            System.out.println(getTestData("Username", TCID));
             System.out.println(nativeDriver.getContextHandles());
 
-              //  Set<String> contextNames = nativeDriver.getContextHandles();
-             //   String lastestContextView = (String) contextNames.toArray()[contextNames.size()-1];
-
-             //   if (lastestContextView.contains("WEBVIEW_chrome") || lastestContextView.contains("WEBVIEW_com.amazon.mShop.android.shopping")){
-            //        nativeDriver.context(lastestContextView);
-             //   }
-                nativeDriver.context("NATIVE_APP");
+            nativeDriver.context("NATIVE_APP");
 
             System.out.println("&&&&&&&&&&&&&&&");
             nativeDriver.findElementByXPath("//android.widget.EditText[@resource-id='ap_email_login' and @index='1']").click();
             nativeDriver.findElementByXPath("//android.widget.EditText[@resource-id='ap_email_login' and @index='1']").sendKeys("mani.kubaran@gmail.com");
 
-           // MobileElement el2 = (MobileElement) nativeDriver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View[1]/android.view.View[2]/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[3]/android.widget.EditText");
-          //  el2.sendKeys("mani.kubaran@gmail.com");
+
             nativeDriver.findElement(By.xpath(getObject("continue_Btn"))).click();
-           // MobileElement el3 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View[1]/android.view.View[2]/android.view.View[2]/android.view.View[2]/android.view.View/android.view.View/android.view.View[7]/android.view.View/android.widget.Button");
-           // el3.click();
+
             MobileElement el4 = (MobileElement) nativeDriver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View[1]/android.view.View[8]/android.view.View[2]/android.widget.EditText");
-            el4.sendKeys(getTestData("Password",TCID));
+            el4.sendKeys(getTestData("Password", TCID));
 
             MobileElement el6 = (MobileElement) nativeDriver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.webkit.WebView/android.webkit.WebView/android.view.View[1]/android.view.View[8]/android.view.View[11]/android.view.View/android.widget.Button");
             el6.click();
-               // nativeDriver.findElement(By.xpath(getObject("email_login"))).sendKeys(getTestData("Username", TCID));
-             //   nativeDriver.findElement(By.xpath(getObject("continue_Btn"))).click();
-             //   nativeDriver.findElement(By.xpath(getObject("password"))).sendKeys(getTestData("Password",TCID));
-              //  boolean showPassword=nativeDriver.findElement(By.id(getObject("showpassowrd_toggle"))).isEnabled();
-              //  if(showPassword==true){
-               //     nativeDriver.findElement(By.xpath(getObject("showpassowrd_toggle"))).click();
-               // }
-                nativeDriver.findElement(By.xpath(getObject("sigIn_Submit"))).click();
-                nativeDriver.navigate().back();
+            nativeDriver.findElement(By.xpath(getObject("sigIn_Submit"))).click();
+            nativeDriver.navigate().back();
             System.out.println("Sigin has been completed");
-
-
 
         } catch (Exception e) {
             e.getMessage();
 
         }
     }
-
-
     /**
      * This method is used to verify after login the Menu screen is present or
      * not
@@ -265,28 +265,20 @@ public class BusinessLogic extends TestRunner {
         return elem;
     }
 
-    public void search(String TCID)throws Exception{
+    public void search(String TCID) throws Exception {
         nativeDriver.findElementByXPath(getObject("skip_SignIn_Btn")).click();
         nativeDriver.findElementByXPath(getObject("search_bar")).click();
         Thread.sleep(5000);
-      MobileElement searchBar=  nativeDriver.findElementByXPath(getObject("search_bar"));
-        searchBar.sendKeys(getTestData("Search",TCID));
-        //nativeDriver.getKeyboard().sendKeys(Keys.BACK_SPACE);
-        //nativeDriver.runAppInBackground(Duration.ofSeconds(5));
-
-        Robot robot =new Robot();
+        MobileElement searchBar = nativeDriver.findElementByXPath(getObject("search_bar"));
+        searchBar.sendKeys(getTestData("Search", TCID));
+        Robot robot = new Robot();
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.delay(5);
         robot.keyRelease(KeyEvent.VK_ENTER);
-
-
-
         Thread.sleep(5000);
         System.out.println("^^^^^^^^^^^^^");
         Thread.sleep(5000);
-       //  nativeDriver.findElementByXPath(getObject("search_bar")).click();
-       System.out.println(nativeDriver.getPageSource());
-
+        System.out.println(nativeDriver.getPageSource());
         swipeScreen(Direction.UP);
     }
 
