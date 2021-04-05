@@ -76,7 +76,8 @@ String Udata;
 	@AfterMethod
 	public void terminate()
 	{
-		
+
+		nativeDriver.quit();
 	}
 }
 
