@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd" version="6.29.0" timestamp="2021-05-06T20:29:42.853">
+<file name="C:\Users\Dell\Desktop\AppiumDemo1\appiumDemo\src\main\java\com\amazon\utils\ExcelUtils.java">
+<violation beginline="70" endline="70" begincolumn="17" endcolumn="21" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.amazon.utils" class="ExcelUtils" method="readHeaderIndex" variable="found" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'found'.
+</violation>
+<violation beginline="289" endline="289" begincolumn="26" endcolumn="40" rule="UnusedLocalVariable" ruleset="Best Practices" package="com.amazon.utils" class="ExcelUtils" method="readNumberofCellsinXL" variable="CurrentRowCells" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'CurrentRowCells'.
+</violation>
+</file>
+</pmd>

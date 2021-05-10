@@ -12,7 +12,6 @@ public class PropertyReader {
 	static Properties propConfig=new Properties();
 	static Properties propObjetRepo=new Properties();
 	
-		
 	public static void loadPropertyFiles()
 	{
 		try

@@ -1,28 +1,26 @@
 package com.amazon.tc;
 
-import io.appium.java_client.*;
+import com.amazon.driverPackage.TestRunner;
+import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.nativekey.AndroidKey;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.*;
-
-import com.amazon.driverPackage.TestRunner;
-import org.openqa.selenium.Dimension;
 
 public class BusinessLogic extends TestRunner {
 
     public BusinessLogic() {
 
     }
-
     private static final By amazon_logo = By.xpath("//*[@resource-id='com.amazon.mShop.android.shopping:id/action_bar_home_logo']");
     private static final By harmburger_menu = By.xpath("//*[@resource-id='com.amazon.mShop.android.shopping:id/action_bar_burger_icon']");
     private static final By search_bar = By.xpath("//*[@resource-id='com.amazon.mShop.android.shopping:id/rs_search_src_text']");
@@ -47,16 +45,21 @@ public class BusinessLogic extends TestRunner {
      *
      * @throws NoSuchElementException
      */
+
+
     public void verifyHomeScreen() {
         try {
             if (nativeDriver.findElement(amazon_logo).isDisplayed()) {
                 //    By.xpath(getObject("amazon_logo"))).isDisplayed()) {
                 System.out.println("Amazon screen Header");
             }
+            
         } catch (Exception e) {
             e.getMessage();
         }
     }
+
+
 
     /**
      * This method is used to verify whether the hambruger menu is present or not
@@ -64,6 +67,13 @@ public class BusinessLogic extends TestRunner {
      *
      * @throws NoSuchElementException
      */
+
+    public void FuncClick(String xpathExpression){
+        nativeDriver.findElementByXPath("").click();
+    }
+
+
+
 
     public void clickHarmburgerMenu() {
 
@@ -136,6 +146,8 @@ public class BusinessLogic extends TestRunner {
 
         }
     }
+
+
     /**
      * This method is used to verify after login the Menu screen is present or
      * not
@@ -198,16 +210,6 @@ public class BusinessLogic extends TestRunner {
         nativeDriver.findElement(By.xpath(getObject("backButton"))).click();
         nativeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     }
-
-
-    /**
-     * This method is used to click and view List of beneficiaries Accounts.
-     *
-     * If the fund button object is not present
-     *
-     * @throws NoSuchElementException
-     *
-     */
 
     /**
      * Function name    : scroll_down | Input  : String | Output  : String
@@ -284,12 +286,10 @@ public class BusinessLogic extends TestRunner {
 
 
     /**
-     * This method is used to Verify the list of beneficiaries
+     * This method is used to logout from the App
      *
      * @throws NoSuchElementException
      */
-
-
     public void logout() {
 
         try {
